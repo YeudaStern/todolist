@@ -8,6 +8,7 @@ import Form from "./Form";
 const ToDoList = ({ userId }) => {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
 
@@ -66,6 +67,10 @@ const ToDoList = ({ userId }) => {
     }
   };
 
+  const filteredTodos = todos.filter((todo) =>
+    todo.text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="w-full max-w-3xl mx-auto mb-8">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-6 transition-all duration-300">
@@ -80,7 +85,27 @@ const ToDoList = ({ userId }) => {
           onAdd={handleAdd}
         />
 
-        <div className="mt-6 space-y-3">
+        {todos.length > 0 && (
+          <div className="mt-6 mb-4 relative">
+            <input
+              type="text"
+              placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            />
+            <svg 
+              className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        )}
+
+        <div className="mt-4 space-y-3">
           {todos.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-gray-400 py-10 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800/50">
               <svg className="w-16 h-16 mb-4 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,8 +114,12 @@ const ToDoList = ({ userId }) => {
               <p className="text-lg font-medium">No tasks yet...</p>
               <p className="text-sm mt-1 opacity-75">Add a new task to get started!</p>
             </div>
+          ) : filteredTodos.length === 0 ? (
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <p>No tasks found matching "{searchQuery}"</p>
+            </div>
           ) : (
-            todos.map((todo) => (
+            filteredTodos.map((todo) => (
               <div
                 key={todo.id}
                 className="group transform transition-all duration-200 hover:scale-[1.01]"
