@@ -12,7 +12,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/register", formData);
+      const res = await axios.post("https://todolist-azbb.onrender.com/register", formData);
       console.log(res);
       setMessage("משתמש נרשם בהצלחה");
     } catch (err) {

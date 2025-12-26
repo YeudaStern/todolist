@@ -10,7 +10,7 @@ const Login = ({ onLoginSuccess }) => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/login?id=${id}&pass=${pass}`);
+      const res = await axios.get(`https://todolist-azbb.onrender.com/login?id=${id}&pass=${pass}`);
       if (res.status === 200) {
         onLoginSuccess(res.data);
         setError("");

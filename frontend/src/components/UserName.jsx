@@ -49,7 +49,7 @@ const UserName = ({ userId }) => {
       setUser(null);
       setShowInfo(false); 
       try {
-        const res = await axios.get(`http://localhost:3000/user/${userId}`);
+        const res = await axios.get(`https://todolist-azbb.onrender.com/user/${userId}`);
         setUser(res.data);
       } catch (err) {
         console.error("Error fetching user details:", err);

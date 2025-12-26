@@ -19,7 +19,7 @@ const ToDoList = ({ userId }) => {
 
   const fetchTodos = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/todos?userId=${userId}`);
+      const { data } = await axios.get(`https://todolist-azbb.onrender.com/todos?userId=${userId}`);
       setTodos(data);
     } catch (err) {
       console.error("Error fetching todos:", err);
@@ -34,7 +34,7 @@ const ToDoList = ({ userId }) => {
       id: String(Date.now()),
     };
     try {
-      const { data } = await axios.post("http://localhost:3000/todos", newTodo);
+      const { data } = await axios.post("https://todolist-azbb.onrender.com/todos", newTodo);
       setTodos([...todos, data]);
       toast.success("Task added successfully.");
     } catch (err) {
@@ -55,7 +55,7 @@ const ToDoList = ({ userId }) => {
   const confirmDelete = async () => {
     if (todoToDelete) {
       try {
-        await axios.delete(`http://localhost:3000/todos/${todoToDelete.id}`);
+        await axios.delete(`https://todolist-azbb.onrender.com/todos/${todoToDelete.id}`);
         setTodos(todos.filter((t) => t.id !== todoToDelete.id));
         toast.success(`Task "${todoToDelete.text}" deleted.`);
       } catch (err) {
